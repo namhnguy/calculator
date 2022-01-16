@@ -19,7 +19,7 @@ function operate(num1, num2, operator) {
         if (num2 === 0) {
             return "Cannot divide by zero";
         }
-        return num1 / num2;
+        return Math.round((num1 / num2) * 1000) / 1000;
     }
     return "Something went wrong";
 }
@@ -85,7 +85,15 @@ function operatorButton(operator) {
         firstMath = true;
     }
     firstOp = operator;
-    prevDisplay.textContent = firstNum + ' ' + firstOp;
+    if (firstOp === '+' || firstOp === '-') {
+        prevDisplay.textContent = firstNum + ' ' + firstOp;
+    }
+    else if (firstOp === '*') {
+        prevDisplay.textContent = firstNum + ' ' + '\u00d7';
+    }
+    else {
+        prevDisplay.textContent = firstNum + ' ' + '\u00f7';
+    }
     firstOpPresent = true;
     equalSignPressed = false;
 }
@@ -105,9 +113,9 @@ const btnTimes = document.querySelector('#calc-times');
 const btnMinus = document.querySelector('#calc-minus');
 const btnPlus = document.querySelector('#calc-plus');
 const btnEqual = document.querySelector('#calc-equal');
-const btnDecimal = document.querySelector('#calc-decimal');
 const btnClear = document.querySelector('#calc-clear');
 const btnDelete = document.querySelector('#calc-delete');
+const btnNN = document.querySelector('#calc-NN');
 const prevDisplay = document.querySelector('.previous-calc');
 const currentDisplay = document.querySelector('.current-calc');
 
@@ -166,7 +174,15 @@ btnPlus.addEventListener('click', () => operatorButton('+'))
 btnEqual.addEventListener('click', function () {
     if (firstNum !== '' && secondNum !== '' && firstOp !== '') {
         let answer = operate(parseInt(firstNum), parseInt(secondNum), firstOp);
-        prevDisplay.textContent = firstNum + ' ' + firstOp + ' ' + secondNum + ' =';
+        if (firstOp === '+' || firstOp === '-') {
+            prevDisplay.textContent = firstNum + ' ' + firstOp + ' ' + secondNum + ' =';
+        }
+        else if (firstOp === '*') {
+            prevDisplay.textContent = firstNum + ' ' + '\u00d7' + ' ' + secondNum + ' =';
+        }
+        else {
+            prevDisplay.textContent = firstNum + ' ' + '\u00f7' + ' ' + secondNum + ' =';
+        }
         currentDisplay.textContent = answer;
         if (answer === "Cannot divide by zero") {
             firstNum = '';
@@ -202,4 +218,8 @@ btnDelete.addEventListener('click', function () {
         }
         currentDisplay.textContent = firstNum;
     }
+})
+
+btnNN.addEventListener('click', function () {
+    currentDisplay.textContent = 'Created by Nam Nguyen';
 })
