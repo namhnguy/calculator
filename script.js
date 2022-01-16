@@ -35,6 +35,61 @@ function clear() {
     equalSignPressed = false;
 }
 
+function numberButton(string) {
+    if (equalSignPressed) {
+        clear();
+        firstNum += string;
+        currentDisplay.textContent = firstNum;
+        return;
+    }
+    if (firstMath) {
+        secondNum = '';
+        firstMath = false;
+    }
+    if (firstOpPresent) {
+        if (secondNum === '0') {
+            secondNum = string;
+            currentDisplay.textContent = secondNum;
+            return;
+        }
+        secondNum += string;
+        currentDisplay.textContent = secondNum;
+        return;
+    }
+    if (firstNum === '0') {
+        firstNum = string;
+        currentDisplay.textContent = firstNum;
+        return;
+    }
+    firstNum += string;
+    currentDisplay.textContent = firstNum;
+}
+
+function operatorButton(operator) {
+    if (firstMath) {
+        secondNum = '';
+    }
+    if (firstOpPresent && secondNum !== '') {
+        let answer = operate(parseInt(firstNum), parseInt(secondNum), firstOp);
+        currentDisplay.textContent = answer;
+        if (answer === "Cannot divide by zero") {
+            firstNum = '';
+            secondNum = '';
+            firstOp = '';
+            firstOpPresent = false;
+            firstMath = false;
+            prevDisplay.textContent = '';
+            return;
+        }
+        firstNum = answer;
+        firstMath = true;
+    }
+    firstOp = operator;
+    prevDisplay.textContent = firstNum + ' ' + firstOp;
+    firstOpPresent = true;
+    equalSignPressed = false;
+}
+
 const btn0 = document.querySelector('#calc-0');
 const btn1 = document.querySelector('#calc-1');
 const btn2 = document.querySelector('#calc-2');
@@ -71,262 +126,42 @@ btn0.addEventListener('click', function () {
         secondNum += '0';
         if (secondNum.startsWith('0')) {
             secondNum = '0';
-            return;
         }
         currentDisplay.textContent = secondNum;
         return;
     }
     firstNum += '0';
     if (firstNum.startsWith('0')) {
-        firstNum = '';
-        return;
+        firstNum = '0';
     }
     currentDisplay.textContent = firstNum;
 })
 
-btn1.addEventListener('click', function () {
-    if (equalSignPressed) {
-        clear();
-        firstNum += '1';
-        currentDisplay.textContent = firstNum;
-        return;
-    }
-    if (firstMath) {
-        secondNum = '';
-        firstMath = false;
-    }
-    if (firstOpPresent) {
-        secondNum += '1';
-        currentDisplay.textContent = secondNum;
-        return;
-    }
-    firstNum += '1';
-    currentDisplay.textContent = firstNum;
-})
+btn1.addEventListener('click', () => numberButton('1'));
 
-btn2.addEventListener('click', function () {
-    if (equalSignPressed) {
-        clear();
-        firstNum += '2';
-        currentDisplay.textContent = firstNum;
-        return;
-    }
-    if (firstMath) {
-        secondNum = '';
-        firstMath = false;
-    }
-    if (firstOpPresent) {
-        secondNum += '2';
-        currentDisplay.textContent = secondNum;
-        return;
-    }
-    firstNum += '2';
-    currentDisplay.textContent = firstNum;
-})
+btn2.addEventListener('click', () => numberButton('2'))
 
-btn3.addEventListener('click', function () {
-    if (equalSignPressed) {
-        clear();
-        firstNum += '4';
-        currentDisplay.textContent = firstNum;
-        return;
-    }
-    if (firstMath) {
-        secondNum = '';
-        firstMath = false;
-    }
-    if (firstOpPresent) {
-        secondNum += '3';
-        currentDisplay.textContent = secondNum;
-        return;
-    }
-    firstNum += '3';
-    currentDisplay.textContent = firstNum;
-})
+btn3.addEventListener('click', () => numberButton('3'))
 
-btn4.addEventListener('click', function () {
-    if (equalSignPressed) {
-        clear();
-        firstNum += '4';
-        currentDisplay.textContent = firstNum;
-        return;
-    }
-    if (firstMath) {
-        secondNum = '';
-        firstMath = false;
-    }
-    if (firstOpPresent) {
-        secondNum += '4';
-        currentDisplay.textContent = secondNum;
-        return;
-    }
-    firstNum += '4';
-    currentDisplay.textContent = firstNum;
-})
+btn4.addEventListener('click', () => numberButton('4'))
 
-btn5.addEventListener('click', function () {
-    if (equalSignPressed) {
-        clear();
-        firstNum += '5';
-        currentDisplay.textContent = firstNum;
-        return;
-    }
-    if (firstMath) {
-        secondNum = '';
-        firstMath = false;
-    }
-    if (firstOpPresent) {
-        secondNum += '5';
-        currentDisplay.textContent = secondNum;
-        return;
-    }
-    firstNum += '5';
-    currentDisplay.textContent = firstNum;
-})
+btn5.addEventListener('click', () => numberButton('5'))
 
-btn6.addEventListener('click', function () {
-    if (equalSignPressed) {
-        clear();
-        firstNum += '6';
-        currentDisplay.textContent = firstNum;
-        return;
-    }
-    if (firstMath) {
-        secondNum = '';
-        firstMath = false;
-    }
-    if (firstOpPresent) {
-        secondNum += '6';
-        currentDisplay.textContent = secondNum;
-        return;
-    }
-    firstNum += '6';
-    currentDisplay.textContent = firstNum;
-})
+btn6.addEventListener('click', () => numberButton('6'))
 
-btn7.addEventListener('click', function () {
-    if (equalSignPressed) {
-        clear();
-        firstNum += '7';
-        currentDisplay.textContent = firstNum;
-        return;
-    }
-    if (firstMath) {
-        secondNum = '';
-        firstMath = false;
-    }
-    if (firstOpPresent) {
-        secondNum += '7';
-        currentDisplay.textContent = secondNum;
-        return;
-    }
-    firstNum += '7';
-    currentDisplay.textContent = firstNum;
-})
+btn7.addEventListener('click', () => numberButton('7'))
 
-btn8.addEventListener('click', function () {
-    if (equalSignPressed) {
-        clear();
-        firstNum += '8';
-        currentDisplay.textContent = firstNum;
-        return;
-    }
-    if (firstMath) {
-        secondNum = '';
-        firstMath = false;
-    }
-    if (firstOpPresent) {
-        secondNum += '8';
-        currentDisplay.textContent = secondNum;
-        return;
-    }
-    firstNum += '8';
-    currentDisplay.textContent = firstNum;
-})
+btn8.addEventListener('click', () => numberButton('8'))
 
-btn9.addEventListener('click', function () {
-    if (equalSignPressed) {
-        clear();
-        firstNum += '9';
-        currentDisplay.textContent = firstNum;
-        return;
-    }
-    if (firstMath) {
-        secondNum = '';
-        firstMath = false;
-    }
-    if (firstOpPresent) {
-        secondNum += '9';
-        currentDisplay.textContent = secondNum;
-        return;
-    }
-    firstNum += '9';
-    currentDisplay.textContent = firstNum;
-})
+btn9.addEventListener('click', () => numberButton('9'))
 
-btnDivide.addEventListener('click', function () {
-    if (firstMath) {
-        secondNum = '';
-    }
-    if (firstOpPresent && secondNum !== '') {
-        let answer = operate(parseInt(firstNum), parseInt(secondNum), firstOp);
-        currentDisplay.textContent = answer;
-        firstNum = answer;
-        firstMath = true;
-    }
-    firstOp = '/';
-    prevDisplay.textContent = firstNum + ' ' + firstOp;
-    firstOpPresent = true;
-    equalSignPressed = false;
-})
+btnDivide.addEventListener('click', () => operatorButton('/'))
 
-btnTimes.addEventListener('click', function () {
-    if (firstMath) {
-        secondNum = '';
-    }
-    if (firstOpPresent && secondNum !== '') {
-        let answer = operate(parseInt(firstNum), parseInt(secondNum), firstOp);
-        currentDisplay.textContent = answer;
-        firstNum = answer;
-        firstMath = true;
-    }
-    firstOp = '*';
-    prevDisplay.textContent = firstNum + ' ' + firstOp;
-    firstOpPresent = true;
-    equalSignPressed = false;
-})
+btnTimes.addEventListener('click', () => operatorButton('*'))
 
-btnMinus.addEventListener('click', function () {
-    if (firstMath) {
-        secondNum = '';
-    }
-    if (firstOpPresent && secondNum !== '') {
-        let answer = operate(parseInt(firstNum), parseInt(secondNum), firstOp);
-        currentDisplay.textContent = answer;
-        firstNum = answer;
-        firstMath = true;
-    }
-    firstOp = '-';
-    prevDisplay.textContent = firstNum + ' ' + firstOp;
-    firstOpPresent = true;
-    equalSignPressed = false;
-})
+btnMinus.addEventListener('click', () => operatorButton('-'))
 
-btnPlus.addEventListener('click', function () {
-    if (firstMath) {
-        secondNum = '';
-    }
-    if (firstOpPresent && secondNum !== '') {
-        let answer = operate(parseInt(firstNum), parseInt(secondNum), firstOp);
-        currentDisplay.textContent = answer;
-        firstNum = answer;
-        firstMath = true;
-    }
-    firstOp = '+';
-    prevDisplay.textContent = firstNum + ' ' + firstOp;
-    firstOpPresent = true;
-    equalSignPressed = false;
-})
+btnPlus.addEventListener('click', () => operatorButton('+'))
 
 btnEqual.addEventListener('click', function () {
     if (firstNum !== '' && secondNum !== '' && firstOp !== '') {
